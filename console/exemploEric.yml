@@ -1,0 +1,34 @@
+---
+- name: OpenStack
+  hosts: localhost
+  vars:
+    openstack_authentication:
+      auth_url: http://10.130.214.31:5000/v3
+      username: admin
+      password: d642ef99804241a2
+      project_name: admin
+      user_domain_name: Default
+      project_domain_name: Default
+
+  tasks:
+
+    - name: Deletando uma imagem...
+      os_image:
+        auth: "{{ openstack_authentication }}"
+        name: teste
+        state: absent
+
+    - name: Criando uma instância...
+      os_server:
+        state: present
+        auth: "{{ openstack_authentication }}"
+        name: ansible-sabe-criar-vm
+        image: 54db790a-760c-4862-8ceb-d809191a7418
+        key_name: ansible-lua
+        timeout: 200
+        flavor: 1
+        nics:
+          - net-id: 7afed87a-b512-4ef1-b7e9-eb1ccb56cf1e
+        meta:
+          hostname: ansible-sabe-criar-vm
+          group: uge_master

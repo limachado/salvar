@@ -1,0 +1,35 @@
+---
+- name: configurar ambiente
+  hosts: all 
+
+  tasks:
+  - name: instalando chocolatey
+    win_shell: |
+      @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+  
+  - name: instalando python
+    win_chocolatey:
+      name: python
+      version: '3.6.5'
+      state: present
+      force: yes
+
+  - name: Criando um usuário
+    win_user:
+      name: Devops 
+      password: Zaq1@wsx
+      password_never_expires: yes
+      state: present
+      groups:
+        - Administradores
+        
+  - name: criar pasta
+    win_file: path=C:\Windows\Temp\AUTOMACAO state=directory  
+  - name: variavel de ambiente
+    win_environment:
+      state: present
+      name: DIRAUTOMACAO
+      value: C:\Windows\Temp\AUTOMACAO 
+      level: machine
+
+

@@ -1,0 +1,10 @@
+[windows]
+172.20.148.139 
+
+[windows:vars]
+ansible_user=devops	
+ansible_password=Zaq1@wsx
+ansible_port=5985
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=ignore
+

@@ -1,0 +1,48 @@
+---
+- name: OpenStack
+  hosts: localhost
+  vars:
+    openstack_authentication:
+      auth_url: 127.0.0.1:5000/v3
+      username: admin
+      password: d642ef99804241a2
+      project_name: admin
+      user_domain_name: Default
+      project_domain_name: Default
+    #proxy_env:
+     # http_proxy: http://limachado:Leitinha15@proxylatam.indra.es:8080
+  gather_facts: False
+
+  tasks:
+#    - name: Subindo uma imagem...
+ #     environment: "{{proxy_env}}"
+  #    os_image:
+   #     auth: "{{ openstack_authentication }}"
+    #    name: centos-cloud-64
+     #   disk_format: qcow2
+      #  state: present
+       # filename: /home/limachado/ansible-openstack/console/CentOS-7-x86_64-GenericCloud.qcow2
+        #properties:
+         # cpu_arch: x86_64
+          #distro: ubuntu
+
+    #- name: Deletando uma instancia...
+      #environment: "{{proxy_env}}"
+      #os_server:
+       # auth: "{{ openstack_authentication }}"
+       # name: ansible-sabe-criar-vm
+       # state: absent
+
+    - name: Criando uma instância...
+      #environment: "{{proxy_env}}"
+      os_server:
+        state: present
+        auth: "{{ openstack_authentication }}"
+        name: cirros-teste-lua
+        image: 54db790a-760c-4862-8ceb-d809191a7418 
+       # key_name: luakeypub
+        timeout: 200
+        flavor: 1
+        #auto_floating_ip: no
+        network: 7afed87a-b512-4ef1-b7e9-eb1ccb56cf1e
+
